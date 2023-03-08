@@ -41,24 +41,32 @@ public class Main {
 
     }
     public static Map<String, Integer> calculateResult(File inputFile) throws IOException {
-
-        BufferedReader br = new BufferedReader(new FileReader(inputFile));
-
         Map<String, Integer> result = new HashMap<>();
-        int n = Integer.parseInt(br.readLine());
-        for (int i = 0; i < n; i++) {
-            String line = br.readLine();
-            int spaceIndex = line.indexOf(' ');
-            String name = line.substring(0, spaceIndex);
-            String voiceStr = line.substring(spaceIndex + 1);
-            int voices = Integer.parseInt(voiceStr);
 
-            if(!result.containsKey(name)) {
-                result.put(name, 0);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(inputFile));
+
+            int n = Integer.parseInt(br.readLine());
+            for (int i = 0; i < n; i++) {
+                String line = br.readLine();
+                int spaceIndex = line.lastIndexOf(' ');
+                String name = line.substring(0, spaceIndex);
+                String voiceStr = line.substring(spaceIndex + 1);
+                int voices = Integer.parseInt(voiceStr);
+
+                if (!result.containsKey(name)) {
+                    result.put(name, 0);
+                }
+                result.put(name, result.get(name) + voices);
             }
-            result.put(name, result.get(name) + voices);
+            br.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("Error in file");
+        } catch (NumberFormatException e) {
+            System.err.println("File not found: количество голосов записано не верно" + e.getMessage());
         }
-        br.close();
         return result;
     }
     public static void printResult(Map<String, Integer> result, File outputFile) throws IOException {
