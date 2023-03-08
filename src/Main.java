@@ -34,6 +34,18 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         File inputFile = new File("res/in.txt");
+        Map<String, Integer> result = calculateResult(inputFile);
+
+        File outputFile = new File("res/out.txt");
+        FileWriter outputFileWriter = new FileWriter(outputFile);
+
+        for (String name : result.keySet()) {
+            outputFileWriter.write(name + " " + result.get(name) + "\n");
+        }
+        outputFileWriter.close();
+
+    }
+    public static Map<String, Integer> calculateResult(File inputFile) throws IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(inputFile));
 
@@ -47,19 +59,11 @@ public class Main {
             int voices = Integer.parseInt(voiceStr);
 
             if(!result.containsKey(name)) {
-              result.put(name, 0);
+                result.put(name, 0);
             }
             result.put(name, result.get(name) + voices);
         }
         br.close();
-
-        File outputFile = new File("res/out.txt");
-        FileWriter outputFileWriter = new FileWriter(outputFile);
-
-        for (String name : result.keySet()) {
-            outputFileWriter.write(name + " " + result.get(name) + "\n");
-        }
-        outputFileWriter.close();
-
+        return result;
     }
 }
