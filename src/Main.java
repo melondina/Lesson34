@@ -54,10 +54,12 @@ public class Main {
         br.close();
 
         File outputFile = new File("res/out.txt");
+        FileWriter outputFileWriter = new FileWriter(outputFile);
 
         for (String name : result.keySet()) {
-            System.out.println(name + " " + result.get(name));
+            outputFileWriter.write(name + " " + result.get(name) + "\n");
         }
+        outputFileWriter.close();
 
     }
 }
