@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,8 +33,9 @@ public class Main {
     // Obama 17
 
     public static void main(String[] args) throws IOException {
+        File inputFile = new File("res/in.txt");
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new FileReader(inputFile));
 
         Map<String, Integer> result = new HashMap<>();
         int n = Integer.parseInt(br.readLine());
@@ -52,6 +51,9 @@ public class Main {
             }
             result.put(name, result.get(name) + voices);
         }
+        br.close();
+
+        File outputFile = new File("res/out.txt");
 
         for (String name : result.keySet()) {
             System.out.println(name + " " + result.get(name));
